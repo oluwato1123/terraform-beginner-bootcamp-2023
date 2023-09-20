@@ -180,3 +180,57 @@ Also make sure you remove `awscliv2.zip` and `AWS` when writing the bash scipt u
 rm -f '/workspace/awscliv2.zip'
 rm -rf '/workspace/aws'
 ```
+
+
+## Terraform Basics
+
+### Terraform Registry
+
+Terraform sources their provider and modules from the Terraform registry which is located at [https://registry.terraform.io/](https://registry.terraform.io/)
+
+- **Providers** refers to a plugin that enables Terraform to interact with and manage resources in a specific infrastructure or service. Providers serve as the interface between Terraform and the API or services of a particular cloud provider, on-premises infrastructure, or software service.
+
+[https://registry.terraform.io/providers/hashicorp/random](https://registry.terraform.io/providers/hashicorp/random)
+
+
+
+- **Modules** is a way to organize and encapsulate a set of related resources, making it easier to manage and reuse configurations. Modules enable you to break down your infrastructure code into smaller, more manageable and reusable components.
+
+### Terraform Console
+
+We can see a list of all the Terraform commands by simply typing `terraform`
+
+#### Terraform Init
+
+`terraform init` is a command used in Terraform to initialize a new or existing Terraform configuration in a directory. When you run `terraform init`, Terraform performs the initialization steps.
+
+#### Terraform Plan
+
+`terraform plan` is a command in Terraform that analyzes your configured infrastructure and provides a preview of the changes that would be made if you were to apply your configuration using `terraform apply`. It's a critical step in the Terraform workflow as it helps you understand the intended changes and potential impacts on your infrastructure before actually applying them. 
+
+#### Terraform Apply
+
+`terraform apply` is a command in Terraform used to apply the changes described in your Terraform configuration to the targeted infrastructure. It takes the desired state from your configuration and makes the necessary API calls to create, modify, or delete resources in order to align the actual infrastructure with the desired state. Apply should prompt yes or no.
+
+If we want to automitically approve an apply, we can apply the auto approve flag - `terraform apply --auto-approve`
+
+### Terraform Lock Files
+
+`.terraform.lock.hcl` contains the locked versioning for the providers or modules that should be used with this project.
+
+The Terraform Lock File **should be committed** to your Version Control System (VSC) eg. Github
+
+### Terraform State Files
+
+`.terraform.tfstate` contains the information about the current state of your infrastructure.
+
+This file **should not be committed** to your VCS
+
+This file can contain sensitive data
+
+If you lose this file, you lose knowing the state of your infrastructure.
+
+`.terraform.tfstate.backup` is the previous state file
+
+### Terraform Directory
+`.terraform` directory contains binaries of terraform providers.

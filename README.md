@@ -214,6 +214,12 @@ We can see a list of all the Terraform commands by simply typing `terraform`
 
 If we want to automitically approve an apply, we can apply the auto approve flag - `terraform apply --auto-approve`
 
+#### Terraform Destroy
+
+`terraform destroy` is a command in Terraform used to destroy all the resources created by the Terraform configuration in the specified directory. It essentially reverses the actions taken by `terraform apply` by deleting all managed infrastructure.
+
+ If you want to automate the destroy without manual confirmation, you can use the -auto-approve flag eg. `terraform destroy --auto-approve`
+
 ### Terraform Lock Files
 
 `.terraform.lock.hcl` contains the locked versioning for the providers or modules that should be used with this project.

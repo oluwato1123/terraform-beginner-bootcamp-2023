@@ -8,13 +8,13 @@
       + [Shebang Considerations](#shebang-considerations)
       + [Execution Considerations](#execution-considerations)
       + [Linux Permision Consideration](#linux-permision-consideration)
-   * [Gitpod lifecycle (Before, Init, Command)](#gitpod-lifecycle-before-init-command)
-   * [Working with Env Vars](#working-with-env-vars)
-      + [env command](#env-command)
-      + [Printing Vars](#printing-vars)
-      + [Scoping of env Vars](#scoping-of-env-vars)
-      + [Persisting Env Vars in Gitpod](#persisting-env-vars-in-gitpod)
-   * [AWS CLI Installation](#aws-cli-installation)
+- [Gitpod lifecycle - Before, Init, Command](#gitpod-lifecycle-before-init-command)
+- [Working with Env Vars](#working-with-env-vars)
+   * [env command](#env-command)
+   * [Printing Vars](#printing-vars)
+   * [Scoping of env Vars](#scoping-of-env-vars)
+   * [Persisting Env Vars in Gitpod](#persisting-env-vars-in-gitpod)
+- [AWS CLI Installation](#aws-cli-installation)
 - [Terraform Basics](#terraform-basics)
    * [Terraform Registry](#terraform-registry)
    * [Terraform Console](#terraform-console)
@@ -22,10 +22,11 @@
       + [Terraform Plan](#terraform-plan)
       + [Terraform Apply](#terraform-apply)
       + [Terraform Destroy](#terraform-destroy)
-   * [Terraform Lock Files](#terraform-lock-files)
-   * [Terraform State Files](#terraform-state-files)
-   * [Terraform Directory](#terraform-directory)
-
+      + [Terraform Lock Files](#terraform-lock-files)
+      + [Terraform State Files](#terraform-state-files)
+      + [Terraform Directory](#terraform-directory)
+- [Issues with Terraform Cloud Login and Gitpod Workspace](#issues-with-terraform-cloud-login-and-gitpod-workspace)
+- 
 ## Semantic Versioning :mage:
 
 This project is going to utilize semantic versioning for its tagging
@@ -117,7 +118,7 @@ chmod 744 ./bin/install_terraform_cli
 
 https://en.wikipedia.org/wiki/Chmod
 
-### Gitpod lifecycle (Before, Init, Command)
+## Gitpod lifecycle - Before, Init, Command
 
 We need to be careful when using `init` because it will not rerun if we restart an existing workspace. Use `before` instead.
 
@@ -125,9 +126,9 @@ https://www.gitpod.io/docs/configure/workspaces/tasks
 
 
 
-### Working with Env Vars
+## Working with Env Vars
 
-#### env command
+### env command
 
 We can list out all Environment Variablles (Env Vars) using the `env` command
 
@@ -152,17 +153,17 @@ HELLO='world'
 echo $HELLO
 ```
 
-#### Printing Vars
+### Printing Vars
 
 We can print an env var using echo eg. `echo $HELLO`
 
-#### Scoping of env Vars
+### Scoping of env Vars
 
 When you open up new bash terminals in VSCode, it will not be aware of env vars that you have set in another window.
 
 If you want env vars to persist across all future bash terminals that are open, you need to set env vars in your bash profile. eg. `.bash_profile`
 
-#### Persisting Env Vars in Gitpod
+### Persisting Env Vars in Gitpod
 
 We can persist env vars into gitpod by storing them in Gitpod Sececrets Storage.
 
@@ -174,7 +175,7 @@ All future workspaces launched will set the env vars for all bash terminals open
 
 You can also set env vars in the `.gitpod.yml` but this can only contain non-sensitive env vars.
 
-### AWS CLI Installation
+## AWS CLI Installation
 
 AWS CLI is installed for the project visa the bash script [`.bin/install_aws_cli`](./bin/install_aws_cli)
 
@@ -245,13 +246,13 @@ If we want to automitically approve an apply, we can apply the auto approve flag
 
  If you want to automate the destroy without manual confirmation, you can use the -auto-approve flag eg. `terraform destroy --auto-approve`
 
-### Terraform Lock Files
+#### Terraform Lock Files
 
 `.terraform.lock.hcl` contains the locked versioning for the providers or modules that should be used with this project.
 
 The Terraform Lock File **should be committed** to your Version Control System (VSC) eg. Github
 
-### Terraform State Files
+#### Terraform State Files
 
 `.terraform.tfstate` contains the information about the current state of your infrastructure.
 
@@ -263,15 +264,15 @@ If you lose this file, you lose knowing the state of your infrastructure.
 
 `.terraform.tfstate.backup` is the previous state file
 
-### Terraform Directory
+#### Terraform Directory
 `.terraform` directory contains binaries of terraform providers.
 
 
-##Issues with Terraform Cloud Login and Gitpod Workspace
+## Issues with Terraform Cloud Login and Gitpod Workspace
 
 When attempting to run `terraform login`, it lauches a bash with a wiswig view to generate a token. It doesn't work as expected in Gitpod VsCode in the browser.
 
-The walkarounf is to manually generate a token in Terraform cloud using the link below
+The walkaround is to manually generate a token in Terraform cloud using the link below
 ```
 https://app.terraform.io/app/settings/tokens
 ```

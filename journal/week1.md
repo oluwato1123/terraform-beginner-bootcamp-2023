@@ -50,3 +50,5 @@ The `auto.tfvars` file in Terraform is used to automatically load variable value
 When running Terraform in Terraform Cloud, it automatically looks for a file named `auto.tfvars` in the working directory of the configuration being applied. If found, it automatically loads the variable values from this file
 
 ### Order of terraform variable precedence
+![variable precedence](https://github.com/oluwato1123/terraform-beginner-bootcamp-2023/assets/77586531/d1b60172-fb2e-467d-8564-f433c9b22cba)
+

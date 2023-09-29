@@ -52,3 +52,24 @@ When running Terraform in Terraform Cloud, it automatically looks for a file nam
 ### Order of terraform variable precedence
 ![variable precedence](https://github.com/oluwato1123/terraform-beginner-bootcamp-2023/assets/77586531/d1b60172-fb2e-467d-8564-f433c9b22cba)
 
+
+## Dealing with Configuration Drift
+
+
+### What happens if you lose your state file?
+If you lose your state file, You'll most likely need to tear down all your cloud infrastructure manually. 
+
+You can use `terraform import`, but it won't work for all cloud resources. You need to check the terraform provider documentation to see which resources support import.
+
+
+### Fix missing Resources with Terraform Import
+
+`terraform import aws_s3_bucket.bucket bucket-name`
+
+[Terraform Import](https://developer.hashicorp.com/terraform/cli/import)
+
+[AWS S3 Bucket Import](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#import)
+
+### Fix Manual Configuration
+
+If someone goes and delete or modifies cloud resources manually through clickops. If we run `terraform plan`, it will attempt to put our infrastructure back into the expected state fixing configuration drift

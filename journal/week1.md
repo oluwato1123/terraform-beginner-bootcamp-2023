@@ -118,3 +118,52 @@ module "terrahouse_aws" {
 ```
 
 [Module Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
+
+## Considerations when using ChatGPT to write terraform
+LLMs such as ChatGPT ay not be trained on the latest documentation or information about terraform.
+
+It may likely show older examples that could be deprecated, often affecting providers.
+
+
+## Working with files in Terraform
+
+### Fileexists Function
+
+This is a built-in terraform function to check the existance of a file in a given path.
+
+Functions are evaluated during configuration parsing rather than at apply time, so this function can only be used with files that are already present on disk before Terraform takes any actions.
+
+```tf
+condition     = fileexists(var.error_html_filepath)
+```
+
+[fileexists function](https://developer.hashicorp.com/terraform/language/functions/fileexists)
+
+
+### Filemd5 Function
+
+The filemd5() function in Terraform calculates the MD5 checksum of a file. It takes the path to the file as an argument and returns a string containing the MD5 checksum.
+
+The MD5 checksum is then used to set the etag attribute of the aws_s3_bucket_object resource. This ensures that the file will not be overwritten if it has not been changed
+
+[filemd5 Function](https://developer.hashicorp.com/terraform/language/functions/filemd5)
+
+### Path Variable
+
+In terraform, there is a special variable called `path` that allows us to reference local paths:
+- path.module = get the path for a current module
+- path.root = get the path for the root module
+
+[Special Path Variable](https://developer.hashicorp.com/terraform/language/expressions/references#filesystem-and-workspace-info)
+
+example - 
+
+```
+resource "aws_s3_object" "index_html" {
+  bucket = aws_s3_bucket.website_bucket.bucket
+  key    = "index.html"
+  source ="${path.root}/public/index.html"
+
+  etag = filemd5(var.index_html_filepath)
+}
+```

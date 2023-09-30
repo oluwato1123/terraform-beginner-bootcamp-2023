@@ -1,11 +1,11 @@
 terraform {
-  #   cloud {
-  #     organization = "oluwato-terraform"
+    cloud {
+      organization = "oluwato-terraform"
 
-  #     workspaces {
-  #       name = "terra-house-1"
-  #     }
-  #   }
+      workspaces {
+        name = "terraform-cloud"
+      }
+    }
 
 
 }

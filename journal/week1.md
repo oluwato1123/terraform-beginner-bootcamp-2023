@@ -238,3 +238,48 @@ jsonencode is a function in Terraform used to convert a given Terraform value in
 ```
 [jsonencode Function](https://developer.hashicorp.com/terraform/language/functions/jsonencode)
 
+
+## Changing the Lifecycle of resources
+
+The lifecycle meta-argument in Terraform allows you to control the lifecycle behavior of a resource. It provides fine-grained control over actions like creating, updating, and deleting a resource, allowing you to customize how Terraform manages the resource throughout its lifecycle.
+
+Here's an example of how to use the lifecycle meta-argument:
+
+```
+resource "example_resource" "example" {
+  # Resource configuration
+
+  lifecycle {
+    create_before_destroy = true
+    prevent_destroy       = false
+    ignore_changes        = ["ignore_me"]
+  }
+}
+```
+
+[The lifecycle Meta-Argument](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle)
+
+## Terraform Data
+
+Plain data values such as Local Values and Input Variables don't have any side-effects to plan against and so they aren't valid in replace_triggered_by. You can use terraform_data's behavior of planning an action each time input changes to indirectly use a plain value to trigger replacement.
+
+```tf
+variable "revision" {
+  default = 1
+}
+
+resource "terraform_data" "replacement" {
+  input = var.revision
+}
+
+    # This resource has no convenient attribute which forces replacement,
+    # but can now be replaced by any change to the revision variable value.
+resource "example_database" "test" {
+  lifecycle {
+    replace_triggered_by = [terraform_data.replacement]
+  }
+}
+```
+
+[Terraform_Data](https://developer.hashicorp.com/terraform/language/resources/terraform-data)
+

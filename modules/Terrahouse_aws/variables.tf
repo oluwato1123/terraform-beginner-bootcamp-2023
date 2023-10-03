@@ -40,3 +40,15 @@ variable "error_html_filepath" {
     error_message = "The specified error.html file path is invalid or does not exist."
   }
 }
+
+variable "content_version" {
+  description = "The content version (positive integer starting at 1)"
+  type        = number
+  default     = 1
+
+  validation {
+    condition     = var.content_version > 0
+    error_message = "Content version must be a positive integer"
+  }
+}
+

@@ -283,3 +283,69 @@ resource "example_database" "test" {
 
 [Terraform_Data](https://developer.hashicorp.com/terraform/language/resources/terraform-data)
 
+
+## Provisioners
+
+Provisioners are used to execute scripts or commands on a local machine or a remote resource (like an EC2 instance) as part of resource creation or destruction. Provisioners allow you to set up, configure, or perform actions on resources before or after they are created or destroyed.
+
+They are not recommended for use by Hashicorp because Configuration Management tools such as Ansible are a better fit, but the functionaity exists.
+
+[Provisioners](https://developer.hashicorp.com/terraform/language/resources/provisioners/syntax)
+
+### Local-exec
+
+The local-exec provisioner in Terraform is a type of provisioner that allows you to execute commands locally on the machine where Terraform is being run. This provisioner is typically used to perform actions on the machine running Terraform, either before or after resource creation or destruction.
+
+```tf
+resource "aws_instance" "web" {
+  # ...
+
+  provisioner "local-exec" {
+    command = "echo The server's IP address is ${self.private_ip}"
+  }
+}
+```
+
+[Local-exec](https://developer.hashicorp.com/terraform/language/resources/provisioners/local-exec)
+
+### Remote_exec
+
+The remote-exec provisioner in Terraform is a provisioner that allows you to execute commands on a remote resource, such as an AWS EC2 instance, via SSH (for Linux instances) or WinRM (for Windows instances). This provisioner is useful for configuring or initializing the remote resource after it has been created.
+
+You'll need to provide credentials to do this.
+
+[Remote-exec](https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec)
+
+```tf
+resource "aws_instance" "web" {
+  # ...
+
+  # Establishes connection to be used by all
+  # generic remote provisioners (i.e. file/remote-exec)
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = var.root_password
+    host     = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "puppet apply",
+      "consul join ${aws_instance.web.private_ip}",
+    ]
+  }
+}
+```
+
+### Heredoc Strings
+  Terraform also supports a "heredoc" style of string literal inspired by Unix shell languages, which allows multi-line strings to be expressed more clearly.
+
+```
+<<EOT
+hello
+world
+EOT
+```
+
+[Heredoc Strings](https://developer.hashicorp.com/terraform/language/expressions/strings#heredoc-strings)

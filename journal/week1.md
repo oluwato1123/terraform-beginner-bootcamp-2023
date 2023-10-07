@@ -349,3 +349,12 @@ EOT
 ```
 
 [Heredoc Strings](https://developer.hashicorp.com/terraform/language/expressions/strings#heredoc-strings)
+
+
+## For_each expression 
+
+The for_each expression allows you to create multiple instances of a resource or module based on a map or set of strings. It iterates over a collection and creates a separate resource instance for each element in the collection, using the element as a key for identifying the instances.
+
+This is mostly useful when you are creating multiples of cloud resource and you want to redice the amount of repetitive terraform code.
+
+[for_each expression](https://developer.hashicorp.com/terraform/language/meta-arguments/for_each)
